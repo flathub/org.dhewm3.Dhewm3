@@ -1,87 +1,91 @@
 app-id: org.dhewm3.Dhewm3
 runtime: org.freedesktop.Platform
 sdk: org.freedesktop.Sdk
-runtime-version: "21.08"
+runtime-version: '21.08'
 command: dhewm3.sh
 
 finish-args:
-- --socket=x11
-- --device=dri
-- --share=ipc
-- --share=network
-- --socket=pulseaudio
+  - --socket=x11
+  - --device=dri
+  - --share=ipc
+  - --share=network
+  - --socket=pulseaudio
 
 cleanup:
-- /include
-- /lib/*.a
-- /lib/*.la
-- /lib/pkgconfig
+  - /include
+  - /lib/*.a
+  - /lib/*.la
+  - /lib/pkgconfig
 
 modules:
 
 # Upstream request. Sadly no release tags so we'll just use a specific snapshot
 # of the master branch.
-- name: backtrace
-  buildsystem: autotools
-  sources:
-    - type: archive
-      url: https://github.com/ianlancetaylor/libbacktrace/archive/d0f5e95a87a4d3e0a1ed6c069b5dae7cbab3ed2a.zip
-      sha256: 9a5f38b2320fe99932584355765f534f3009f892d91c79439977fb2c30e49aa5
+  - name: backtrace
+    buildsystem: autotools
+    sources:
+      - type: archive
+        url: https://github.com/ianlancetaylor/libbacktrace/archive/d0f5e95a87a4d3e0a1ed6c069b5dae7cbab3ed2a.zip
+        sha256: 9a5f38b2320fe99932584355765f534f3009f892d91c79439977fb2c30e49aa5
 
-- name: dhewm3
-  buildsystem: cmake-ninja
-  config-opts:
-  - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-  - -DREPRODUCIBLE_BUILD=ON
-  sources:
-  - type: archive
-    url: https://github.com/dhewm/dhewm3/archive/refs/tags/1.5.1.tar.gz
-    sha256: febaef022ff216435a2ff86f4e1526ac9bccbc401b03bed495a0a2f0b4edfb53
-    x-checker-data:
-      type: anitya
-      project-id: 9154
-      url-template: https://github.com/dhewm/dhewm3/archive/refs/tags/$version.tar.gz
-  - type: shell
-    commands:
+  - name: dhewm3
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DREPRODUCIBLE_BUILD=ON
+    sources:
+      - type: archive
+        url: https://github.com/dhewm/dhewm3/archive/refs/tags/1.5.2_RC2.tar.gz
+        sha256: 88f2995b1e65db0fab28bdea1d8259fb3e09aedd1a34ba6c966472eb01a710b4
+        x-checker-data:
+          type: anitya
+          project-id: 9154
+          url-template: https://github.com/dhewm/dhewm3/archive/refs/tags/$version.tar.gz
+      - type: shell
+        commands:
       # Main code is one level down
-      - mv ./neo/* ./
+          - mv ./neo/* ./
       # supresses warnings for a non-used directory
-      - mkdir -p /app/share/dhewm3
+          - mkdir -p /app/share/dhewm3
 
-- name: launcher
-  buildsystem: simple
-  sources:
-  - type: file
-    path: org.dhewm3.Dhewm3.desktop
-  - type: file
-    path: org.dhewm3.Dhewm3.d3xp.desktop
-  - type: file
-    path: org.dhewm3.Dhewm3.metainfo.xml
-  - type: file
-    url: https://raw.githubusercontent.com/dhewm/dhewm.github.io/master/icon/icon.svg
-    sha256: da570168b9e9d20bbbb889d3a5a60e86c4fc0be1f11db0105955fbf3255e6816
-    dest-filename: org.dhewm3.Dhewm3.svg
+  - name: launcher
+    buildsystem: simple
+    sources:
+      - type: file
+        path: org.dhewm3.Dhewm3.desktop
+      - type: file
+        path: org.dhewm3.Dhewm3.d3xp.desktop
+      - type: file
+        path: org.dhewm3.Dhewm3.metainfo.xml
+      - type: file
+        url: https://raw.githubusercontent.com/dhewm/dhewm.github.io/master/icon/icon.svg
+        sha256: da570168b9e9d20bbbb889d3a5a60e86c4fc0be1f11db0105955fbf3255e6816
+        dest-filename: org.dhewm3.Dhewm3.svg
     # png versions based on the project SVG version
-  - type: file
-    path: org.dhewm3.Dhewm3.128.png
-  - type: file
-    path: org.dhewm3.Dhewm3.256.png
-  - type: script
-    commands:
-    - ls ~/.var/app/org.dhewm3.Dhewm3/data/dhewm3/base || zenity --error --text "Game data /base/ must be added to:\n~/.var/app/org.dhewm3.Dhewm3/data/dhewm3/" --ok-label "Close" --width=400
-    - dhewm3 "$@"
-    dest-filename: dhewm3.sh
-  - type: script
-    commands:
-    - ls ~/.var/app/org.dhewm3.Dhewm3/data/dhewm3/d3xp || zenity --error --text "Game data /d3xp/ must be added to:\n~/.var/app/org.dhewm3.Dhewm3/data/dhewm3/" --ok-label "Close" --width=400
-    - dhewm3 +set fs_game d3xp "$@"
-    dest-filename: dhewm3_d3xp.sh
-  build-commands:
-  - install -Dm 644 org.dhewm3.Dhewm3.desktop -t /app/share/applications
-  - install -Dm 644 org.dhewm3.Dhewm3.d3xp.desktop -t /app/share/applications
-  - install -Dm 644 org.dhewm3.Dhewm3.128.png -t /app/share/icons/hicolor/128x128/apps/
-  - install -Dm 644 org.dhewm3.Dhewm3.256.png -t /app/share/icons/hicolor/256x256/apps/
-  - install -Dm 644 org.dhewm3.Dhewm3.svg -t /app/share/icons/hicolor/scalable/apps/
-  - install -Dm 644 org.dhewm3.Dhewm3.metainfo.xml -t /app/share/metainfo
-  - install -Dm 744 dhewm3.sh -t /app/bin/
-  - install -Dm 744 dhewm3_d3xp.sh -t /app/bin/
+      - type: file
+        path: org.dhewm3.Dhewm3.128.png
+      - type: file
+        path: org.dhewm3.Dhewm3.256.png
+      - type: script
+        commands:
+          - ls ~/.var/app/org.dhewm3.Dhewm3/data/dhewm3/base || zenity --error --text
+            "Game data /base/ must be added to:\n~/.var/app/org.dhewm3.Dhewm3/data/dhewm3/"
+            --ok-label "Close" --width=400
+          - dhewm3 "$@"
+        dest-filename: dhewm3.sh
+      - type: script
+        commands:
+          - ls ~/.var/app/org.dhewm3.Dhewm3/data/dhewm3/d3xp || zenity --error --text
+            "Game data /d3xp/ must be added to:\n~/.var/app/org.dhewm3.Dhewm3/data/dhewm3/"
+            --ok-label "Close" --width=400
+          - dhewm3 +set fs_game d3xp "$@"
+        dest-filename: dhewm3_d3xp.sh
+    build-commands:
+      - install -Dm 644 org.dhewm3.Dhewm3.desktop -t /app/share/applications
+      - install -Dm 644 org.dhewm3.Dhewm3.d3xp.desktop -t /app/share/applications
+      - install -Dm 644 org.dhewm3.Dhewm3.128.png -t /app/share/icons/hicolor/128x128/apps/
+      - install -Dm 644 org.dhewm3.Dhewm3.256.png -t /app/share/icons/hicolor/256x256/apps/
+      - install -Dm 644 org.dhewm3.Dhewm3.svg -t /app/share/icons/hicolor/scalable/apps/
+      - install -Dm 644 org.dhewm3.Dhewm3.metainfo.xml -t /app/share/metainfo
+      - install -Dm 744 dhewm3.sh -t /app/bin/
+      - install -Dm 744 dhewm3_d3xp.sh -t /app/bin/

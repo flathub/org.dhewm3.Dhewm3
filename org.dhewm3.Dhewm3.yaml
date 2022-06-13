@@ -36,8 +36,8 @@ modules:
       - -DREPRODUCIBLE_BUILD=ON
     sources:
       - type: archive
-        url: https://github.com/dhewm/dhewm3/archive/refs/tags/1.5.2.tar.gz
-        sha256: 0652d85bcc470b8535dee0fc6badd57a82a183984f7a02a3fa13937436166eb0
+        url: https://github.com/dhewm/dhewm3/archive/refs/tags/1.5.2_RC2.tar.gz
+        sha256: 88f2995b1e65db0fab28bdea1d8259fb3e09aedd1a34ba6c966472eb01a710b4
         x-checker-data:
           type: anitya
           project-id: 9154
@@ -89,7 +89,7 @@ modules:
         url: https://github.com/dhewm/dhewm3-sdk
         branch: fitz
         commit: 68f062ec385e178144e8d5789a2333436857dd00
-        
+
   - name: hardcorps
     buildsystem: cmake-ninja
     no-make-install: true
@@ -102,7 +102,7 @@ modules:
         url: https://github.com/dhewm/dhewm3-sdk
         branch: hardcorps
         commit: fec5714d4e0a4b71e93461c5aa7a5d2f403c6cdf
-        
+
   - name: libreocoop
     buildsystem: cmake-ninja
     no-make-install: true
@@ -115,7 +115,7 @@ modules:
         url: https://github.com/Stradex/librecoop/
         tag: alpha_1.5
         commit: 0daec5b6a7553cb4b06d65b717e2d9a411ff47ca
-        
+
   - name: rivensin
     buildsystem: cmake-ninja
     no-make-install: true
@@ -128,7 +128,7 @@ modules:
         url: https://github.com/dhewm/dhewm3-sdk
         branch: rivensin
         commit: e093ace3e44a2832234a97da5a2cfe769a76d5fd
-        
+
   - name: lostmission
     buildsystem: cmake-ninja
     no-make-install: true

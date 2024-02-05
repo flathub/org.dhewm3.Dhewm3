@@ -26,8 +26,8 @@ modules:
     buildsystem: autotools
     sources:
       - type: archive
-        url: https://github.com/ianlancetaylor/libbacktrace/archive/9ae4f4ae4481b1e69d38ed810980d33103544613.zip
-        sha256: 7b8fed02dd67bf083f06c6c3a6b30d86b0467a996fd94670c18109a723ab76b7
+        url: https://github.com/ianlancetaylor/libbacktrace/archive/14818b7783eeb9a56c3f0fca78cefd3143f8c5f6.zip
+        sha256: 0d09295938155aa84d9a6049f63df8cd2def3a28302b3550ea3ead9100b3d086
 
   - name: dhewm3
     buildsystem: cmake-ninja
@@ -36,8 +36,8 @@ modules:
       - -DREPRODUCIBLE_BUILD=ON
     sources:
       - type: archive
-        url: https://github.com/dhewm/dhewm3/archive/refs/tags/1.5.2.tar.gz
-        sha256: 0652d85bcc470b8535dee0fc6badd57a82a183984f7a02a3fa13937436166eb0
+        url: https://github.com/dhewm/dhewm3/archive/refs/tags/1.5.3_RC1.tar.gz
+        sha256: 2c0cec07656ecbfa863439a17c10030798b27675a908b79150977b7d2a4724dd
         x-checker-data:
           type: anitya
           project-id: 9154

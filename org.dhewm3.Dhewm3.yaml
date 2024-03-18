@@ -140,7 +140,7 @@ modules:
       - type: git
         url: https://github.com/dhewm/dhewm3-sdk
         branch: d3le
-        commit: 62daa91c07325024ca903cce9344f408107fa252
+        commit: 0309d7c9eeec3373f550ccf71e506cedaf6e819d
 
   - name: launcher
     buildsystem: simple

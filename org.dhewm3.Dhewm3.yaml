@@ -36,8 +36,8 @@ modules:
       - -DREPRODUCIBLE_BUILD=ON
     sources:
       - type: archive
-        url: https://github.com/dhewm/dhewm3/archive/refs/tags/1.5.2.tar.gz
-        sha256: 0652d85bcc470b8535dee0fc6badd57a82a183984f7a02a3fa13937436166eb0
+        url: https://github.com/dhewm/dhewm3/archive/refs/tags/1.5.3_RC2.tar.gz
+        sha256: 9f63e6795d208a7cd6cb6714e28ef1d50a79c6f104f6824c9b4c95ca1a84a348
         x-checker-data:
           type: anitya
           project-id: 9154

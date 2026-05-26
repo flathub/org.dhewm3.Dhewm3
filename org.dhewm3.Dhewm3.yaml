@@ -1,7 +1,7 @@
 app-id: org.dhewm3.Dhewm3
 runtime: org.freedesktop.Platform
 sdk: org.freedesktop.Sdk
-runtime-version: '24.08'
+runtime-version: '25.08'
 command: dhewm3.sh
 
 finish-args:
@@ -34,6 +34,7 @@ modules:
     config-opts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
       - -DREPRODUCIBLE_BUILD=ON
+      - -DCMAKE_EXE_LINKER_FLAGS=-lcurl
     sources:
       - type: archive
         url: https://github.com/dhewm/dhewm3/archive/refs/tags/1.5.4.tar.gz
@@ -108,6 +109,7 @@ modules:
     no-make-install: true
     config-opts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DCMAKE_POLICY_VERSION_MINIMUM=3.5
     post-install:
       - install -Dm 755 librecoop.so /app/lib/dhewm3
     sources:
@@ -179,6 +181,12 @@ modules:
 
   - name: launcher
     buildsystem: simple
+    build-commands:
+      - install -Dm 644 org.dhewm3.Dhewm3.desktop -t /app/share/applications
+      - install -Dm 644 org.dhewm3.Dhewm3.d3xp.desktop -t /app/share/applications
+      - install -Dm 644 org.dhewm3.Dhewm3.metainfo.xml -t /app/share/metainfo
+      - install -Dm 744 dhewm3.sh -t /app/bin/
+      - install -Dm 744 dhewm3_d3xp.sh -t /app/bin/
     sources:
       - type: file
         path: org.dhewm3.Dhewm3.desktop
@@ -200,9 +208,3 @@ modules:
             --ok-label "Close" --width=400
           - dhewm3 +set fs_game d3xp "$@"
         dest-filename: dhewm3_d3xp.sh
-    build-commands:
-      - install -Dm 644 org.dhewm3.Dhewm3.desktop -t /app/share/applications
-      - install -Dm 644 org.dhewm3.Dhewm3.d3xp.desktop -t /app/share/applications
-      - install -Dm 644 org.dhewm3.Dhewm3.metainfo.xml -t /app/share/metainfo
-      - install -Dm 744 dhewm3.sh -t /app/bin/
-      - install -Dm 744 dhewm3_d3xp.sh -t /app/bin/

@@ -1,7 +1,7 @@
 app-id: org.dhewm3.Dhewm3
 runtime: org.freedesktop.Platform
 sdk: org.freedesktop.Sdk
-runtime-version: '25.08'
+runtime-version: '26.08'
 command: dhewm3.sh
 
 finish-args:
@@ -11,7 +11,8 @@ finish-args:
   - --share=ipc
   - --share=network
   - --socket=pulseaudio
-
+build-options:
+  cxxflags: -std=c++17
 cleanup:
   - /include
   - '*.a'
